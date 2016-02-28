@@ -1,0 +1,38 @@
+<div class="col-md-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">聊天室</div>
+		<!--消息列表-->
+		<div class="panel-body">
+			<!--增加一个自定义指令，自动滚动到底部-->
+			<div class="list-group" scroll-to-bottom style="height:300px;overflow-y:auto;">
+				<!--track by $index，用id进行排序，这样的话，就可以支持重复的显示你的消息-->
+				<!--默认情况下不加这个，如果你有两个一模一样的消息，会报错的，加上这个后，通过索引去跟踪消息，因为索引肯定是不一样的，所以说它就不会报错了-->
+				<div class="list-group-item" ng-repeat="message in room.messages track by $index">
+					<img width="48" height="48" ng-src="{{message.creator.avatar}}" alt="头像"/>&nbsp;&nbsp;{{message.creator.username}}:{{message.content}}
+					<time am-time-ago="message.createAt"></time>
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="form" ng-controller="MessageSendCtrl">
+				<div class="form-group">
+					<!--enter-break是一个自定义指令-->
+					<textarea class="form-control" ng-model="newMessage" enter-break="createMessage()" placeholder="回车发送消息" cols="30" rows="10" style="resize:none;"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-3">
+	<div class="panel panel-default">
+		<div class="panel-heading">在线</div>
+		<div class="panel-body">
+			<div class="list-group">
+				<div class="list-group-item" ng-repeat="user in room.users">
+					<img width="48" height="48" ng-src="{{user.avatar}}" alt="头像"/>&nbsp;&nbsp;{{user.username}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
